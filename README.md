@@ -5,8 +5,6 @@
 [![Rust](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
 [![Tauri](https://img.shields.io/badge/built%20with-Tauri%20v2-24C8D8.svg)](https://tauri.app/)
 
-> **[🇫🇷 Lire la documentation en français](README.fr.md)**
-
 **Open-Firenet Installer** is the universal, cross-platform desktop GUI & CLI assistant to discover, flash, configure, and wirelessly update your **Open-Firenet** dongle (the open-source ESP32-S3 replacement for the proprietary RIKA Firenet module).
 
 Unlike WebSerial solutions (ESP Web Tools) that **fail completely on Mozilla Firefox and Apple Safari**, Open-Firenet Installer runs natively across **Windows**, **macOS** (Apple Silicon & Intel), and **Linux** as a single, self-contained executable with zero external runtime dependencies (no Python or esptool installation needed).
