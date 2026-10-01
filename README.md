@@ -164,6 +164,21 @@ open-firenet-installer monitor --port /dev/ttyACM0
 
 ---
 
+## 🌐 Network Requirements (Discovery & Wireless OTA)
+
+Discovery and wireless updates are designed for a home network where the computer and the dongle are on the **same subnet**. On segmented networks (VLANs, guest Wi-Fi, port security, strict firewalls), they may not work out of the box:
+
+- **Discovery** queries mDNS (`openfirenet.local`) and probes the computer's own subnet (`x.x.x.1`–`x.x.x.254`) over HTTP (port 80). A dongle on another subnet is not found automatically; use its IP address directly (e.g. `ota --ip 192.168.20.15`).
+- **Wireless OTA** works in both directions:
+  1. the installer sends an invitation to the dongle on **UDP port 3232**;
+  2. the dongle then **connects back to the computer over TCP**, on a random port opened by the installer, to download the firmware (it must succeed within 12 seconds).
+
+  The second step is the one usually blocked: the dongle must be allowed to open a connection to the computer, and the computer's firewall must accept incoming connections from the local network.
+
+If an update fails with a timeout, put the computer on the same subnet as the dongle (or allow the traffic above), or update over USB instead.
+
+---
+
 ## 🛠️ Building from Source
 
 ### Prerequisites
