@@ -1050,6 +1050,44 @@ select option:checked, select option:hover {
 }
 
 /* Release Markdown Body */
+/* Clickable header with an up/down chevron that lights up on hover. */
+.release-card-header {
+  cursor: pointer;
+}
+
+.release-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.2s;
+  transform: rotate(180deg);
+}
+
+.release-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.release-card.collapsed .release-toggle {
+  transform: rotate(0deg);
+}
+
+.release-card-header:hover .release-toggle,
+.release-card-header:focus-visible .release-toggle {
+  color: var(--primary-amber);
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.release-card-header:focus-visible {
+  outline: none;
+}
+
 /* Older releases are collapsed: title row and actions only, notes and files on demand. */
 .release-card.collapsed .release-body,
 .release-card.collapsed .release-assets-section {

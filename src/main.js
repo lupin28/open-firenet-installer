@@ -528,9 +528,6 @@ function renderReleasesList(releases) {
 
     const actionsHtml = `
       <div class="release-actions-row">
-        <button class="btn btn-secondary btn-sm btn-toggle-notes">
-          ${index === 0 ? t("hideNotes") : t("showNotes")}
-        </button>
         ${hasOta ? `
           <button class="btn btn-secondary btn-sm btn-quick-ota" data-tag="${r.tag_name}">
             <span class="btn-icon">${icon("radio")}</span> ${t("useForOta")}
@@ -555,6 +552,7 @@ function renderReleasesList(releases) {
           <a href="${githubReleaseUrl}" class="github-link external-link" title="${t("viewOnGithub")}">
             GitHub <span class="ext-icon">${icon("external-link")}</span>
           </a>
+          <span class="release-toggle" aria-hidden="true">${icon("chevron-down")}</span>
         </div>
       </div>
 
@@ -568,10 +566,21 @@ function renderReleasesList(releases) {
 
     releasesList.appendChild(card);
 
-    const btnNotes = card.querySelector(".btn-toggle-notes");
-    btnNotes.addEventListener("click", () => {
-      const collapsed = card.classList.toggle("collapsed");
-      btnNotes.textContent = collapsed ? t("showNotes") : t("hideNotes");
+    // A click on the card header shows / hides the notes (the GitHub link keeps its own behaviour); the
+    // header is also keyboard-operable.
+    const header = card.querySelector(".release-card-header");
+    header.setAttribute("role", "button");
+    header.setAttribute("tabindex", "0");
+    const syncToggle = () => {
+      const collapsed = card.classList.contains("collapsed");
+      header.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      header.title = collapsed ? t("showNotes") : t("hideNotes");
+    };
+    const toggleNotes = () => { card.classList.toggle("collapsed"); syncToggle(); };
+    syncToggle();
+    header.addEventListener("click", (e) => { if (!e.target.closest("a")) toggleNotes(); });
+    header.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleNotes(); }
     });
 
     const btnOta = card.querySelector(".btn-quick-ota");
