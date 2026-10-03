@@ -492,14 +492,18 @@ function renderReleasesList(releases) {
     return;
   }
 
-  releases.forEach((r) => {
+  releases.forEach((r, index) => {
     const card = document.createElement("div");
-    card.className = "release-card";
+    // Only the newest release shows its notes; the others are collapsed to keep the list short and smooth to scroll.
+    card.className = index === 0 ? "release-card" : "release-card collapsed";
 
     const isPrerelease = r.prerelease;
     const badgeClass = isPrerelease ? "badge-prerelease" : "badge-stable";
     const badgeText = isPrerelease ? t("badgePrerelease") : t("badgeStable");
     const releaseTitle = r.name && r.name.trim() ? r.name : r.tag_name;
+    // The tag is already shown in its own badge: drop it from the start of the title ("v3.2.0 - Foo" -> "Foo").
+    const tagPrefix = new RegExp("^" + r.tag_name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:]?\\s*");
+    const shortTitle = releaseTitle.replace(tagPrefix, "") || releaseTitle;
     const githubReleaseUrl = `https://github.com/openfirenet/open-firenet/releases/tag/${r.tag_name}`;
 
     const assetsHtml = (r.assets && r.assets.length > 0)
@@ -544,13 +548,14 @@ function renderReleasesList(releases) {
       <div class="release-card-header">
         <div class="release-title-row">
           <span class="release-tag-badge">${r.tag_name}</span>
-          <h3 class="release-title">${releaseTitle}</h3>
+          <h3 class="release-title" title="${releaseTitle}">${shortTitle}</h3>
         </div>
         <div class="release-badges-row">
           <span class="release-type-badge ${badgeClass}">${badgeText}</span>
           <a href="${githubReleaseUrl}" class="github-link external-link" title="${t("viewOnGithub")}">
             GitHub <span class="ext-icon">${icon("external-link")}</span>
           </a>
+          <span class="release-toggle" aria-hidden="true">${icon("chevron-down")}</span>
         </div>
       </div>
 
@@ -563,6 +568,23 @@ function renderReleasesList(releases) {
     `;
 
     releasesList.appendChild(card);
+
+    // A click on the card header shows / hides the notes (the GitHub link keeps its own behaviour); the
+    // header is also keyboard-operable.
+    const header = card.querySelector(".release-card-header");
+    header.setAttribute("role", "button");
+    header.setAttribute("tabindex", "0");
+    const syncToggle = () => {
+      const collapsed = card.classList.contains("collapsed");
+      header.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      header.title = collapsed ? t("showNotes") : t("hideNotes");
+    };
+    const toggleNotes = () => { card.classList.toggle("collapsed"); syncToggle(); };
+    syncToggle();
+    header.addEventListener("click", (e) => { if (!e.target.closest("a")) toggleNotes(); });
+    header.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleNotes(); }
+    });
 
     const btnOta = card.querySelector(".btn-quick-ota");
     if (btnOta) {

@@ -67,8 +67,8 @@ button, .tab-btn, .lang-select, .nav-tabs {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: rgba(19, 27, 46, 0.8);
-  backdrop-filter: blur(12px);
+  /* Opaque, no backdrop blur: blur is very costly in WebKitGTK (Linux) and made scrolling stutter. */
+  background: rgb(19, 27, 46);
   border-bottom: 1px solid var(--card-border);
 }
 
@@ -339,7 +339,7 @@ button, .tab-btn, .lang-select, .nav-tabs {
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
   padding: 26px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -588,7 +588,7 @@ select option:checked, select option:hover {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   animation: fadeInScale 0.25s ease-out;
@@ -755,7 +755,7 @@ select option:checked, select option:hover {
   background: linear-gradient(180deg, #17223b 0%, #10182b 100%);
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -833,7 +833,7 @@ select option:checked, select option:hover {
   background: linear-gradient(180deg, #17223b 0%, #10182b 100%);
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   margin-top: 12px;
@@ -951,13 +951,12 @@ select option:checked, select option:hover {
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
   padding: 26px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  animation: fadeIn 0.25s ease-out;
 }
 
 .release-card::before {
@@ -974,7 +973,8 @@ select option:checked, select option:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  /* One line: a long title is truncated with an ellipsis instead of pushing the badges to the next line. */
+  flex-wrap: nowrap;
   gap: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 14px;
@@ -984,6 +984,8 @@ select option:checked, select option:hover {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
+  min-width: 0;
 }
 
 .release-tag-badge {
@@ -996,18 +998,24 @@ select option:checked, select option:hover {
   border-radius: 6px;
   letter-spacing: 0.3px;
   box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+  flex-shrink: 0;
 }
 
 .release-title {
   font-size: 17px;
   font-weight: 700;
   color: #fff;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .release-badges-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .release-type-badge {
@@ -1051,6 +1059,50 @@ select option:checked, select option:hover {
 }
 
 /* Release Markdown Body */
+/* Clickable header with an up/down chevron that lights up on hover. */
+.release-card-header {
+  cursor: pointer;
+}
+
+.release-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.2s;
+  transform: rotate(180deg);
+}
+
+.release-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.release-card.collapsed .release-toggle {
+  transform: rotate(0deg);
+}
+
+.release-card-header:hover .release-toggle,
+.release-card-header:focus-visible .release-toggle {
+  color: var(--primary-amber);
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.release-card-header:focus-visible {
+  outline: none;
+}
+
+/* Older releases are collapsed: title row and actions only, notes and files on demand. */
+.release-card.collapsed .release-body,
+.release-card.collapsed .release-assets-section {
+  display: none;
+}
+
 .release-body {
   font-size: 13.5px;
   line-height: 1.65;
