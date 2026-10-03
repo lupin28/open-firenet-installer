@@ -501,6 +501,9 @@ function renderReleasesList(releases) {
     const badgeClass = isPrerelease ? "badge-prerelease" : "badge-stable";
     const badgeText = isPrerelease ? t("badgePrerelease") : t("badgeStable");
     const releaseTitle = r.name && r.name.trim() ? r.name : r.tag_name;
+    // The tag is already shown in its own badge: drop it from the start of the title ("v3.2.0 - Foo" -> "Foo").
+    const tagPrefix = new RegExp("^" + r.tag_name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:]?\\s*");
+    const shortTitle = releaseTitle.replace(tagPrefix, "") || releaseTitle;
     const githubReleaseUrl = `https://github.com/openfirenet/open-firenet/releases/tag/${r.tag_name}`;
 
     const assetsHtml = (r.assets && r.assets.length > 0)
@@ -545,7 +548,7 @@ function renderReleasesList(releases) {
       <div class="release-card-header">
         <div class="release-title-row">
           <span class="release-tag-badge">${r.tag_name}</span>
-          <h3 class="release-title">${releaseTitle}</h3>
+          <h3 class="release-title" title="${releaseTitle}">${shortTitle}</h3>
         </div>
         <div class="release-badges-row">
           <span class="release-type-badge ${badgeClass}">${badgeText}</span>

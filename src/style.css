@@ -246,6 +246,11 @@ button, .tab-btn, .lang-select, .nav-tabs {
   animation: fadeIn 0.25s ease-out;
 }
 
+/* Release notes read better a bit wider than the forms of the other tabs. */
+#tab-releases.tab-pane {
+  max-width: 820px;
+}
+
 .tab-pane.active {
   display: block;
 }
@@ -973,7 +978,8 @@ select option:checked, select option:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  /* One line: a long title is truncated with an ellipsis instead of pushing the badges to the next line. */
+  flex-wrap: nowrap;
   gap: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 14px;
@@ -983,6 +989,8 @@ select option:checked, select option:hover {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
+  min-width: 0;
 }
 
 .release-tag-badge {
@@ -995,18 +1003,24 @@ select option:checked, select option:hover {
   border-radius: 6px;
   letter-spacing: 0.3px;
   box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+  flex-shrink: 0;
 }
 
 .release-title {
   font-size: 17px;
   font-weight: 700;
   color: #fff;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .release-badges-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .release-type-badge {
