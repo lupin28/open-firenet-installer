@@ -492,9 +492,10 @@ function renderReleasesList(releases) {
     return;
   }
 
-  releases.forEach((r) => {
+  releases.forEach((r, index) => {
     const card = document.createElement("div");
-    card.className = "release-card";
+    // Only the newest release shows its notes; the others are collapsed to keep the list short and smooth to scroll.
+    card.className = index === 0 ? "release-card" : "release-card collapsed";
 
     const isPrerelease = r.prerelease;
     const badgeClass = isPrerelease ? "badge-prerelease" : "badge-stable";
@@ -527,6 +528,9 @@ function renderReleasesList(releases) {
 
     const actionsHtml = `
       <div class="release-actions-row">
+        <button class="btn btn-secondary btn-sm btn-toggle-notes">
+          ${index === 0 ? t("hideNotes") : t("showNotes")}
+        </button>
         ${hasOta ? `
           <button class="btn btn-secondary btn-sm btn-quick-ota" data-tag="${r.tag_name}">
             <span class="btn-icon">${icon("radio")}</span> ${t("useForOta")}
@@ -563,6 +567,12 @@ function renderReleasesList(releases) {
     `;
 
     releasesList.appendChild(card);
+
+    const btnNotes = card.querySelector(".btn-toggle-notes");
+    btnNotes.addEventListener("click", () => {
+      const collapsed = card.classList.toggle("collapsed");
+      btnNotes.textContent = collapsed ? t("showNotes") : t("hideNotes");
+    });
 
     const btnOta = card.querySelector(".btn-quick-ota");
     if (btnOta) {

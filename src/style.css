@@ -67,8 +67,8 @@ button, .tab-btn, .lang-select, .nav-tabs {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: rgba(19, 27, 46, 0.8);
-  backdrop-filter: blur(12px);
+  /* Opaque, no backdrop blur: blur is very costly in WebKitGTK (Linux) and made scrolling stutter. */
+  background: rgb(19, 27, 46);
   border-bottom: 1px solid var(--card-border);
 }
 
@@ -339,7 +339,7 @@ button, .tab-btn, .lang-select, .nav-tabs {
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
   padding: 26px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -588,7 +588,7 @@ select option:checked, select option:hover {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   animation: fadeInScale 0.25s ease-out;
@@ -755,7 +755,7 @@ select option:checked, select option:hover {
   background: linear-gradient(180deg, #17223b 0%, #10182b 100%);
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -833,7 +833,7 @@ select option:checked, select option:hover {
   background: linear-gradient(180deg, #17223b 0%, #10182b 100%);
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   margin-top: 12px;
@@ -951,13 +951,12 @@ select option:checked, select option:hover {
   border: 1px solid rgba(249, 115, 22, 0.4);
   border-radius: 16px;
   padding: 26px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  animation: fadeIn 0.25s ease-out;
 }
 
 .release-card::before {
@@ -1051,6 +1050,12 @@ select option:checked, select option:hover {
 }
 
 /* Release Markdown Body */
+/* Older releases are collapsed: title row and actions only, notes and files on demand. */
+.release-card.collapsed .release-body,
+.release-card.collapsed .release-assets-section {
+  display: none;
+}
+
 .release-body {
   font-size: 13.5px;
   line-height: 1.65;
