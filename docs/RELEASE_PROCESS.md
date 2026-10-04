@@ -1,6 +1,6 @@
-# Processus d'Intégration Continue (CI) et de Release — Open-Firenet Installer
+# Processus d'Intégration Continue (CI) et de Release — Open Firenet Installer
 
-Ce document décrit le pipeline d'intégration continue, les tests de validation (smoke tests) des binaires produits, la signature cryptographique Minisign, et la procédure de release automatisée de l'**Installeur Open-Firenet**.
+Ce document décrit le pipeline d'intégration continue, les tests de validation (smoke tests) des binaires produits, la signature cryptographique Minisign, et la procédure de release automatisée de l'**Installeur Open Firenet**.
 
 ---
 

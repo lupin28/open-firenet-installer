@@ -48,7 +48,7 @@ struct ApiState {
 pub struct NetworkScanner;
 
 impl NetworkScanner {
-    /// Tente de contacter Open-Firenet via les noms mDNS par défaut
+    /// Tente de contacter Open Firenet via les noms mDNS par défaut
     pub fn probe_mdns_hosts() -> Vec<DiscoveredDongle> {
         let mut results = Vec::new();
         let candidates = ["openfirenet.local:80", "open-firenet.local:80"];
@@ -66,7 +66,7 @@ impl NetworkScanner {
         results
     }
 
-    /// Sonde une adresse IP spécifique pour vérifier si c'est un dongle Open-Firenet
+    /// Sonde une adresse IP spécifique pour vérifier si c'est un dongle Open Firenet
     pub fn probe_ip(ip: &str) -> Option<DiscoveredDongle> {
         let socket_addr: SocketAddr = format!("{}:80", ip).parse().ok()?;
         if TcpStream::connect_timeout(&socket_addr, Duration::from_millis(600)).is_err() {

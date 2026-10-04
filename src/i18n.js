@@ -1,7 +1,7 @@
 export const translations = {
   fr: {
     // Header
-    appTitle: "Open-Firenet",
+    appTitle: "Open Firenet",
     appTitleSuffix: "Installer",
     appSubtitle: "Assistant universel d'installation & mise à jour",
     statusReady: "Prêt",
@@ -27,12 +27,12 @@ export const translations = {
 
     // Discovery Tab
     discoveryTitle: "Détection automatique de votre poêle",
-    discoveryDesc: "Recherche votre poêle Open-Firenet via mDNS (openfirenet.local) et sur votre réseau local.",
+    discoveryDesc: "Recherche votre poêle Open Firenet via mDNS (openfirenet.local) et sur votre réseau local.",
     btnScanInProgress: "Recherche en cours...",
     btnScan: "Rechercher",
     scanLoadingTitle: "Recherche du poêle sur le réseau local...",
     scanLoadingDesc: "Détection mDNS et sonde du sous-réseau en cours...",
-    emptyDevicesTitle: "Aucun poêle Open-Firenet détecté",
+    emptyDevicesTitle: "Aucun poêle Open Firenet détecté",
     emptyDevicesDesc: "Vérifiez que votre clé est allumée et connectée au même réseau Wi-Fi que cet ordinateur.",
     emptyBtnWifiSetup: "Configurer le Wi-Fi via USB",
     emptyBtnRetryScan: "Relancer la recherche",
@@ -97,7 +97,7 @@ export const translations = {
     wifiNativeHintDesc: "Sur les cartes sans puce UART dédiée, vous pouvez aussi configurer le Wi-Fi en vous connectant au point d'accès « Open-Firenet-Setup » (192.168.4.1).",
 
     // Releases Tab
-    releasesTitle: "Versions officielles Open-Firenet",
+    releasesTitle: "Versions officielles Open Firenet",
     releasesDesc: "Historique des publications officielles sur GitHub vérifiées par Minisign.",
     btnRefreshReleases: "Recharger",
     checkingReleases: "Interrogation de GitHub...",
@@ -115,7 +115,7 @@ export const translations = {
 
     // Modal confirmation flash USB & OTA
     modalConfirmTitle: "Confirmation du flashage USB",
-    modalConfirmDesc: "Vous êtes sur le point d'écrire le firmware sur la clé Open-Firenet. Veuillez vérifier les paramètres :",
+    modalConfirmDesc: "Vous êtes sur le point d'écrire le firmware sur la clé Open Firenet. Veuillez vérifier les paramètres :",
     modalTargetPort: "Port USB cible :",
     modalTargetVersion: "Firmware :",
     modalConfirmWarning: "Attention : cette opération va écrire sur la mémoire flash de l'ESP32. Ne débranchez pas la clé pendant l'opération !",
@@ -124,13 +124,13 @@ export const translations = {
     modalBtnConfirm: "Confirmer et flasher",
 
     modalOtaConfirmTitle: "Confirmation de la mise à jour sans fil (OTA)",
-    modalOtaConfirmDesc: "Vous êtes sur le point de mettre à jour votre clé Open-Firenet via le réseau Wi-Fi :",
+    modalOtaConfirmDesc: "Vous êtes sur le point de mettre à jour votre clé Open Firenet via le réseau Wi-Fi :",
     modalTargetIp: "Adresse IP cible :",
     modalOtaConfirmWarning: "Attention : assurez-vous que le poêle et la clé restent allumés pendant le transfert. Ne coupez pas l'alimentation !",
     modalOtaBtnConfirm: "Confirmer et mettre à jour",
 
     // Footer & Alerts
-    footerTagline: "Open-Firenet Installer • Open-Source & Sans Télémétrie",
+    footerTagline: "Open Firenet Installer • Open-Source & Sans Télémétrie",
     footerNoStove: "Aucun poêle connecté",
     footerStoveActive: "Poêle actif :",
     alertFillIp: "Veuillez renseigner l'adresse IP du poêle.",
@@ -144,7 +144,7 @@ export const translations = {
 
   en: {
     // Header
-    appTitle: "Open-Firenet",
+    appTitle: "Open Firenet",
     appTitleSuffix: "Installer",
     appSubtitle: "Universal installation & update assistant",
     statusReady: "Ready",
@@ -170,12 +170,12 @@ export const translations = {
 
     // Discovery Tab
     discoveryTitle: "Automatic Stove Discovery",
-    discoveryDesc: "Discovers your Open-Firenet stove via mDNS (openfirenet.local) and your local network subnet.",
+    discoveryDesc: "Discovers your Open Firenet stove via mDNS (openfirenet.local) and your local network subnet.",
     btnScanInProgress: "Scanning...",
     btnScan: "Search",
     scanLoadingTitle: "Searching for stove on local network...",
     scanLoadingDesc: "Probing mDNS and local subnet in progress...",
-    emptyDevicesTitle: "No Open-Firenet stove detected",
+    emptyDevicesTitle: "No Open Firenet stove detected",
     emptyDevicesDesc: "Ensure your dongle is powered on and connected to the same Wi-Fi network as this computer.",
     emptyBtnWifiSetup: "Configure Wi-Fi via USB",
     emptyBtnRetryScan: "Scan Again",
@@ -240,7 +240,7 @@ export const translations = {
     wifiNativeHintDesc: "On boards without a dedicated UART chip, you can also configure Wi-Fi by connecting to the \"Open-Firenet-Setup\" access point (192.168.4.1).",
 
     // Releases Tab
-    releasesTitle: "Official Open-Firenet Releases",
+    releasesTitle: "Official Open Firenet Releases",
     releasesDesc: "History of official releases on GitHub verified cryptographically with Minisign.",
     btnRefreshReleases: "Reload",
     checkingReleases: "Querying GitHub...",
@@ -258,7 +258,7 @@ export const translations = {
 
     // Modal confirmation flash USB & OTA
     modalConfirmTitle: "USB Flashing Confirmation",
-    modalConfirmDesc: "You are about to flash your Open-Firenet dongle. Please verify the settings below:",
+    modalConfirmDesc: "You are about to flash your Open Firenet dongle. Please verify the settings below:",
     modalTargetPort: "Target USB Port:",
     modalTargetVersion: "Firmware:",
     modalConfirmWarning: "Warning: This operation will write to the ESP32 flash memory. Do not unplug the dongle during the process!",
@@ -267,13 +267,13 @@ export const translations = {
     modalBtnConfirm: "Confirm & Flash",
 
     modalOtaConfirmTitle: "Wireless Update Confirmation (OTA)",
-    modalOtaConfirmDesc: "You are about to update your Open-Firenet dongle over the Wi-Fi network:",
+    modalOtaConfirmDesc: "You are about to update your Open Firenet dongle over the Wi-Fi network:",
     modalTargetIp: "Target IP Address:",
     modalOtaConfirmWarning: "Warning: Ensure the stove and dongle remain powered on during the transfer. Do not disconnect power!",
     modalOtaBtnConfirm: "Confirm & Update",
 
     // Footer & Alerts
-    footerTagline: "Open-Firenet Installer • Open-Source & Privacy First",
+    footerTagline: "Open Firenet Installer • Open-Source & Privacy First",
     footerNoStove: "No stove connected",
     footerStoveActive: "Active stove:",
     alertFillIp: "Please enter the stove IP address.",
@@ -287,7 +287,7 @@ export const translations = {
 
   de: {
     // Header
-    appTitle: "Open-Firenet",
+    appTitle: "Open Firenet",
     appTitleSuffix: "Installer",
     appSubtitle: "Universeller Installations- & Update-Assistent",
     statusReady: "Bereit",
@@ -313,12 +313,12 @@ export const translations = {
 
     // Discovery Tab
     discoveryTitle: "Automatische Pelletofen-Erkennung",
-    discoveryDesc: "Findet Ihren Open-Firenet-Ofen via mDNS (openfirenet.local) und im lokalen Netzwerk.",
+    discoveryDesc: "Findet Ihren Open Firenet-Ofen via mDNS (openfirenet.local) und im lokalen Netzwerk.",
     btnScanInProgress: "Suche läuft...",
     btnScan: "Suchen",
     scanLoadingTitle: "Pelletofen wird im lokalen Netzwerk gesucht...",
     scanLoadingDesc: "mDNS- und Subnetz-Scan läuft...",
-    emptyDevicesTitle: "Kein Open-Firenet-Ofen erkannt",
+    emptyDevicesTitle: "Kein Open Firenet-Ofen erkannt",
     emptyDevicesDesc: "Stellen Sie sicher, dass der Dongle eingeschaltet und im selben WLAN wie dieser Computer ist.",
     emptyBtnWifiSetup: "WLAN via USB konfigurieren",
     emptyBtnRetryScan: "Suche wiederholen",
@@ -383,7 +383,7 @@ export const translations = {
     wifiNativeHintDesc: "Auf Boards ohne dedizierten UART-Chip können Sie das WLAN auch über den Access Point „Open-Firenet-Setup“ (192.168.4.1) konfigurieren.",
 
     // Releases Tab
-    releasesTitle: "Offizielle Open-Firenet Releases",
+    releasesTitle: "Offizielle Open Firenet Releases",
     releasesDesc: "Übersicht der offiziellen GitHub-Releases mit Minisign-Kryptosignatur.",
     btnRefreshReleases: "Neu laden",
     checkingReleases: "GitHub wird abgefragt...",
@@ -401,7 +401,7 @@ export const translations = {
 
     // Modal confirmation flash USB & OTA
     modalConfirmTitle: "Bestätigung des USB-Flashvorgangs",
-    modalConfirmDesc: "Sie sind dabei, die Firmware auf den Open-Firenet-Dongle zu schreiben. Bitte Einstellungen prüfen:",
+    modalConfirmDesc: "Sie sind dabei, die Firmware auf den Open Firenet-Dongle zu schreiben. Bitte Einstellungen prüfen:",
     modalTargetPort: "Ziel-USB-Port:",
     modalTargetVersion: "Firmware:",
     modalConfirmWarning: "Achtung: Dieser Vorgang beschreibt den Flash-Speicher des ESP32. Dongle nicht trennen!",
@@ -410,13 +410,13 @@ export const translations = {
     modalBtnConfirm: "Bestätigen & Flashen",
 
     modalOtaConfirmTitle: "Bestätigung des WLAN-Updates (OTA)",
-    modalOtaConfirmDesc: "Sie sind dabei, Ihren Open-Firenet-Dongle über das WLAN-Netzwerk zu aktualisieren:",
+    modalOtaConfirmDesc: "Sie sind dabei, Ihren Open Firenet-Dongle über das WLAN-Netzwerk zu aktualisieren:",
     modalTargetIp: "Ziel-IP-Adresse:",
     modalOtaConfirmWarning: "Achtung: Stellen Sie sicher, dass Ofen und Dongle während der Übertragung eingeschaltet bleiben!",
     modalOtaBtnConfirm: "Bestätigen & Aktualisieren",
 
     // Footer & Alerts
-    footerTagline: "Open-Firenet Installer • Open-Source & Datenschutz",
+    footerTagline: "Open Firenet Installer • Open-Source & Datenschutz",
     footerNoStove: "Kein Pelletofen verbunden",
     footerStoveActive: "Aktiver Ofen:",
     alertFillIp: "Bitte geben Sie die IP-Adresse des Ofens ein.",

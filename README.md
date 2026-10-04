@@ -1,13 +1,13 @@
-# 🔥 Open-Firenet Installer
+# 🔥 Open Firenet Installer
 
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-green.svg)](#downloads--releases)
 [![Rust](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
 [![Tauri](https://img.shields.io/badge/built%20with-Tauri%20v2-24C8D8.svg)](https://tauri.app/)
 
-**Open-Firenet Installer** is the universal, cross-platform desktop GUI & CLI assistant to discover, flash, configure, and wirelessly update your **Open-Firenet** dongle (the open-source ESP32-S3 replacement for the proprietary RIKA Firenet module).
+**Open Firenet Installer** is the universal, cross-platform desktop GUI & CLI assistant to discover, flash, configure, and wirelessly update your **Open Firenet** dongle (the open-source ESP32-S3 replacement for the proprietary RIKA Firenet module).
 
-Unlike WebSerial solutions (ESP Web Tools) that **fail completely on Mozilla Firefox and Apple Safari**, Open-Firenet Installer runs natively across **Windows**, **macOS** (Apple Silicon & Intel), and **Linux** as a single, self-contained executable with zero external runtime dependencies (no Python or esptool installation needed).
+Unlike WebSerial solutions (ESP Web Tools) that **fail completely on Mozilla Firefox and Apple Safari**, Open Firenet Installer runs natively across **Windows**, **macOS** (Apple Silicon & Intel), and **Linux** as a single, self-contained executable with zero external runtime dependencies (no Python or esptool installation needed).
 
 ---
 
@@ -55,7 +55,7 @@ Browse official stable releases and pre-releases, download binaries automaticall
 - **⚡ USB Serial Flasher with Safe Dual Modes**:
   - **Update Mode** (offset `0x10000`): Updates application firmware while preserving your stored Wi-Fi credentials and configuration.
   - **Full Reset / Factory Mode** (offset `0x0000`): Flashes a complete factory image onto new ESP32-S3 chips or for clean reinstalls.
-- **🔒 Cryptographic Integrity & Security**: Official firmware binaries are verified using **Minisign** digital signatures against the official Open-Firenet community public key before flashing.
+- **🔒 Cryptographic Integrity & Security**: Official firmware binaries are verified using **Minisign** digital signatures against the official Open Firenet community public key before flashing.
 - **📶 Guided USB Wi-Fi Setup**: Provision Wi-Fi credentials over serial with a single click or terminal command.
 - **📟 Embedded Serial Monitor**: Monitor live stove UART dialogue frames and boot logs directly inside your terminal.
 - **🌐 Multilingual**: Built-in support for **English**, **French**, and **German**.
@@ -86,7 +86,7 @@ Pre-compiled standalone binaries and packages are available on the [**GitHub Rel
 > [!NOTE]
 > **Native USB boards (M5Stamp S3, Seeed Studio XIAO ESP32-S3)**:
 > - **Bootloader entry**: If connection to the serial port fails, hold down the physical **BOOT** button while plugging in the USB cable to enter the Espressif ROM download mode.
-> - **Post-flash restart**: Boards without a dedicated USB-to-UART chip cannot be reset automatically over USB DTR/RTS. Press the physical **RESET** button on the board once flashing completes to launch Open-Firenet.
+> - **Post-flash restart**: Boards without a dedicated USB-to-UART chip cannot be reset automatically over USB DTR/RTS. Press the physical **RESET** button on the board once flashing completes to launch Open Firenet.
 > - **Wi-Fi alternative**: On boards without a hardware UART bridge, you can also configure Wi-Fi by connecting directly to the fallback access point **`Open-Firenet-Setup`** (`192.168.4.1`).
 
 ---
@@ -137,7 +137,7 @@ For SSH remote sessions, headless servers, or terminal enthusiasts:
 For automation scripts or advanced users:
 
 ```bash
-# Scan the local network for Open-Firenet dongles
+# Scan the local network for Open Firenet dongles
 open-firenet-installer scan
 
 # Scan a specific subnet
