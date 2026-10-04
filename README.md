@@ -87,7 +87,7 @@ Pre-compiled standalone binaries and packages are available on the [**GitHub Rel
 > **Native USB boards (M5Stamp S3, Seeed Studio XIAO ESP32-S3)**:
 > - **Bootloader entry**: If connection to the serial port fails, hold down the physical **BOOT** button while plugging in the USB cable to enter the Espressif ROM download mode.
 > - **Post-flash restart**: Boards without a dedicated USB-to-UART chip cannot be reset automatically over USB DTR/RTS. Press the physical **RESET** button on the board once flashing completes to launch Open Firenet.
-> - **Wi-Fi alternative**: On boards without a hardware UART bridge, you can also configure Wi-Fi by connecting directly to the fallback access point **`Open Firenet Setup`** (`192.168.4.1`).
+> - **Wi-Fi alternative**: On boards without a hardware UART bridge, you can also configure Wi-Fi by connecting directly to the fallback access point **`Open-Firenet-Setup`** (`192.168.4.1`).
 
 ---
 

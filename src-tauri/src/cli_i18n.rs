@@ -112,19 +112,19 @@ impl CliLang {
             CliLang::Fr => [
                 "Conseils :",
                 "  - Vérifiez que la clé est bien allumée et connectée au Wi-Fi.",
-                "  - Si c'est un premier démarrage, connectez-vous au point d'accès Wi-Fi 'Open Firenet Setup'.",
+                "  - Si c'est un premier démarrage, connectez-vous au point d'accès Wi-Fi 'Open-Firenet-Setup'.",
                 "  - Ou branchez-la en USB pour effectuer le premier flashage.",
             ],
             CliLang::En => [
                 "Tips:",
                 "  - Verify that the dongle is powered on and connected to Wi-Fi.",
-                "  - If first boot, connect to Wi-Fi access point 'Open Firenet Setup'.",
+                "  - If first boot, connect to Wi-Fi access point 'Open-Firenet-Setup'.",
                 "  - Or plug it in via USB to perform the first flash.",
             ],
             CliLang::De => [
                 "Tipps:",
                 "  - Stellen Sie sicher, dass der Dongle eingeschaltet und im WLAN ist.",
-                "  - Beim Erststart mit dem WLAN-Zugangspunkt 'Open Firenet Setup' verbinden.",
+                "  - Beim Erststart mit dem WLAN-Zugangspunkt 'Open-Firenet-Setup' verbinden.",
                 "  - Oder per USB anschließen, um den ersten Flash durchzuführen.",
             ],
         }
@@ -364,9 +364,9 @@ impl CliLang {
 
     pub fn wifi_native_hint(&self) -> &'static str {
         match self {
-            CliLang::Fr => "💡 Astuce : Sur les cartes sans puce UART dédiée, vous pouvez aussi vous connecter au point d'accès Wi-Fi « Open Firenet Setup » (192.168.4.1) pour configurer le réseau.",
-            CliLang::En => "💡 Tip: On boards without a dedicated UART chip, you can also connect to the \"Open Firenet Setup\" Wi-Fi access point (192.168.4.1) to configure the network.",
-            CliLang::De => "💡 Tipp: Auf Boards ohne dedizierten UART-Chip können Sie das Netzwerk auch über den WLAN-Access-Point „Open Firenet Setup“ (192.168.4.1) einrichten.",
+            CliLang::Fr => "💡 Astuce : Sur les cartes sans puce UART dédiée, vous pouvez aussi vous connecter au point d'accès Wi-Fi « Open-Firenet-Setup » (192.168.4.1) pour configurer le réseau.",
+            CliLang::En => "💡 Tip: On boards without a dedicated UART chip, you can also connect to the \"Open-Firenet-Setup\" Wi-Fi access point (192.168.4.1) to configure the network.",
+            CliLang::De => "💡 Tipp: Auf Boards ohne dedizierten UART-Chip können Sie das Netzwerk auch über den WLAN-Access-Point „Open-Firenet-Setup“ (192.168.4.1) einrichten.",
         }
     }
 

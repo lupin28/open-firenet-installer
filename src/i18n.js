@@ -94,7 +94,7 @@ export const translations = {
     btnSendWifi: "Enregistrer le Wi-Fi dans la clé",
     wifiConfigSuccess: "Identifiants Wi-Fi envoyés ! La clé tente la connexion...",
     wifiNativeHintTitle: "Astuce Wi-Fi :",
-    wifiNativeHintDesc: "Sur les cartes sans puce UART dédiée, vous pouvez aussi configurer le Wi-Fi en vous connectant au point d'accès « Open Firenet Setup » (192.168.4.1).",
+    wifiNativeHintDesc: "Sur les cartes sans puce UART dédiée, vous pouvez aussi configurer le Wi-Fi en vous connectant au point d'accès « Open-Firenet-Setup » (192.168.4.1).",
 
     // Releases Tab
     releasesTitle: "Versions officielles Open Firenet",
@@ -237,7 +237,7 @@ export const translations = {
     btnSendWifi: "Save Wi-Fi to Dongle",
     wifiConfigSuccess: "Wi-Fi credentials sent! The dongle is attempting to connect...",
     wifiNativeHintTitle: "Wi-Fi Tip:",
-    wifiNativeHintDesc: "On boards without a dedicated UART chip, you can also configure Wi-Fi by connecting to the \"Open Firenet Setup\" access point (192.168.4.1).",
+    wifiNativeHintDesc: "On boards without a dedicated UART chip, you can also configure Wi-Fi by connecting to the \"Open-Firenet-Setup\" access point (192.168.4.1).",
 
     // Releases Tab
     releasesTitle: "Official Open Firenet Releases",
@@ -380,7 +380,7 @@ export const translations = {
     btnSendWifi: "WLAN auf Dongle speichern",
     wifiConfigSuccess: "WLAN-Daten gesendet! Der Dongle verbindet sich...",
     wifiNativeHintTitle: "WLAN-Tipp:",
-    wifiNativeHintDesc: "Auf Boards ohne dedizierten UART-Chip können Sie das WLAN auch über den Access Point „Open Firenet Setup“ (192.168.4.1) konfigurieren.",
+    wifiNativeHintDesc: "Auf Boards ohne dedizierten UART-Chip können Sie das WLAN auch über den Access Point „Open-Firenet-Setup“ (192.168.4.1) konfigurieren.",
 
     // Releases Tab
     releasesTitle: "Offizielle Open Firenet Releases",
