@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Getting started guide
+    url: https://openfirenet.github.io/get-started.html
+    about: Hardware, flashing the board, Wi-Fi setup and plugging the bridge into the stove, step by step.
+  - name: Bridge and stove link problems
+    url: https://github.com/openfirenet/open-firenet/issues
+    about: Once the bridge is flashed, problems with the stove link go to the firmware repository.
+  - name: Troubleshooting guide
+    url: https://openfirenet.github.io/troubleshooting.html
+    about: The most common problems, including why a wireless update can time out.

@@ -1,0 +1,73 @@
+name: Problem with the installer
+description: Flashing fails, the board or the bridge is not found, Wi-Fi setup or wireless update does not work, display problems...
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report. This repository is for the desktop installer.
+        Once the bridge is flashed and on your network, problems with the stove link go to the [firmware repository](https://github.com/openfirenet/open-firenet/issues).
+  - type: input
+    id: installer_version
+    attributes:
+      label: Installer version
+      description: Shown in the installer's header, or the name of the release you downloaded.
+      placeholder: e.g. 1.5.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux (AppImage)
+        - Linux (.deb)
+        - Linux (standalone binary)
+    validations:
+      required: true
+  - type: input
+    id: os_version
+    attributes:
+      label: System version
+      placeholder: e.g. Windows 11, macOS 15, Debian 13 (Wayland)
+  - type: dropdown
+    id: action
+    attributes:
+      label: What you were doing
+      options:
+        - Network scan (finding the bridge)
+        - USB flash
+        - Wi-Fi setup
+        - Wireless update (OTA)
+        - Releases list
+        - Command line mode
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: board
+    attributes:
+      label: Board
+      description: For USB flash and Wi-Fi setup problems.
+      placeholder: e.g. ESP32-S3-DevKitC-1, M5Stamp S3, XIAO ESP32-S3
+  - type: textarea
+    id: what_happens
+    attributes:
+      label: What happens
+      description: What you did, what you expected, and what happened instead. Copy the exact error message if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: network
+    attributes:
+      label: Network (for scan and wireless update problems)
+      description: Are the computer and the bridge on the same network? Any VLAN, guest Wi-Fi or firewall? See the [network requirements](https://openfirenet.github.io/troubleshooting.html#ota).
+  - type: textarea
+    id: output
+    attributes:
+      label: Output or screenshot
+      description: The text shown by the installer (or the terminal output in command line mode), or a screenshot dragged here.
+      render: text
