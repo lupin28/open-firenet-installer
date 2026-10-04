@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // ==============================================================================
-// Open-Firenet Installer - Automated Screenshot Generator
+// Open Firenet Installer - Automated Screenshot Generator
 //
 // Comment ça marche :
 // 1. Démarre un serveur HTTP Node.js local temporaire servant le dossier dist/
@@ -69,7 +69,7 @@ function getFreePort() {
   });
 }
 
-// 3. Données réalistes pour simuler l'écosystème Open-Firenet
+// 3. Données réalistes pour simuler l'écosystème Open Firenet
 const mockDongle = [
   {
     ip: '192.168.1.93',
@@ -162,7 +162,7 @@ const mockScript = `
 `;
 
 async function main() {
-  console.log('\n🔥 \x1b[1m\x1b[36m=== Open-Firenet Screenshot Automation ===\x1b[0m\n');
+  console.log('\n🔥 \x1b[1m\x1b[36m=== Open Firenet Screenshot Automation ===\x1b[0m\n');
 
   // Vérifier ou compiler le frontend
   if (!fs.existsSync(DIST_DIR) || !fs.existsSync(path.join(DIST_DIR, 'index.html'))) {

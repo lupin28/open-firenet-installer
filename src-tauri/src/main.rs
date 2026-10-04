@@ -21,9 +21,9 @@ use wifi_setup::WifiSetup;
 #[derive(Parser)]
 #[command(
     name = "open-firenet-installer",
-    author = "Open-Firenet Community",
+    author = "Open Firenet Community",
     version = env!("CARGO_PKG_VERSION"),
-    about = "Universal installation, USB flashing and OTA update tool for Open-Firenet"
+    about = "Universal installation, USB flashing and OTA update tool for Open Firenet"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -44,7 +44,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Scanner le réseau local pour détecter la clé Open-Firenet
+    /// Scanner le réseau local pour détecter la clé Open Firenet
     Scan {
         #[arg(short, long)]
         subnet: Option<String>,

@@ -192,7 +192,7 @@ impl OtaFlasher {
             let url = format!("http://{}/api/state", ip);
             if let Ok(resp) = ureq::get(&url).timeout(Duration::from_millis(800)).call() {
                 if resp.status() == 200 {
-                    println!("{} Open-Firenet est de nouveau en ligne et fonctionnel !", "🎉".bold());
+                    println!("{} Open Firenet est de nouveau en ligne et fonctionnel !", "🎉".bold());
                     on_progress(100, "✔ La clé a redémarré avec succès et est de nouveau en ligne !");
                     return true;
                 }

@@ -93,17 +93,17 @@ impl CliLang {
 
     pub fn scan_searching(&self) -> &'static str {
         match self {
-            CliLang::Fr => "🔍 Recherche de la clé Open-Firenet sur votre réseau...",
-            CliLang::En => "🔍 Searching for Open-Firenet dongle on your network...",
-            CliLang::De => "🔍 Open-Firenet-Dongle wird im Netzwerk gesucht...",
+            CliLang::Fr => "🔍 Recherche de la clé Open Firenet sur votre réseau...",
+            CliLang::En => "🔍 Searching for Open Firenet dongle on your network...",
+            CliLang::De => "🔍 Open Firenet-Dongle wird im Netzwerk gesucht...",
         }
     }
 
     pub fn scan_not_found(&self) -> &'static str {
         match self {
-            CliLang::Fr => "❌ Aucune clé Open-Firenet détectée sur le réseau.",
-            CliLang::En => "❌ No Open-Firenet dongle detected on the network.",
-            CliLang::De => "❌ Kein Open-Firenet-Dongle im Netzwerk gefunden.",
+            CliLang::Fr => "❌ Aucune clé Open Firenet détectée sur le réseau.",
+            CliLang::En => "❌ No Open Firenet dongle detected on the network.",
+            CliLang::De => "❌ Kein Open Firenet-Dongle im Netzwerk gefunden.",
         }
     }
 
@@ -112,19 +112,19 @@ impl CliLang {
             CliLang::Fr => [
                 "Conseils :",
                 "  - Vérifiez que la clé est bien allumée et connectée au Wi-Fi.",
-                "  - Si c'est un premier démarrage, connectez-vous au point d'accès Wi-Fi 'OpenFirenet-Setup'.",
+                "  - Si c'est un premier démarrage, connectez-vous au point d'accès Wi-Fi 'Open Firenet Setup'.",
                 "  - Ou branchez-la en USB pour effectuer le premier flashage.",
             ],
             CliLang::En => [
                 "Tips:",
                 "  - Verify that the dongle is powered on and connected to Wi-Fi.",
-                "  - If first boot, connect to Wi-Fi access point 'OpenFirenet-Setup'.",
+                "  - If first boot, connect to Wi-Fi access point 'Open Firenet Setup'.",
                 "  - Or plug it in via USB to perform the first flash.",
             ],
             CliLang::De => [
                 "Tipps:",
                 "  - Stellen Sie sicher, dass der Dongle eingeschaltet und im WLAN ist.",
-                "  - Beim Erststart mit dem WLAN-Zugangspunkt 'OpenFirenet-Setup' verbinden.",
+                "  - Beim Erststart mit dem WLAN-Zugangspunkt 'Open Firenet Setup' verbinden.",
                 "  - Oder per USB anschließen, um den ersten Flash durchzuführen.",
             ],
         }
@@ -132,9 +132,9 @@ impl CliLang {
 
     pub fn scan_found(&self, count: usize) -> String {
         match self {
-            CliLang::Fr => format!("✔ {} clé(s) Open-Firenet trouvée(s) :", count),
-            CliLang::En => format!("✔ {} Open-Firenet dongle(s) found:", count),
-            CliLang::De => format!("✔ {} Open-Firenet-Dongle(s) gefunden:", count),
+            CliLang::Fr => format!("✔ {} clé(s) Open Firenet trouvée(s) :", count),
+            CliLang::En => format!("✔ {} Open Firenet dongle(s) found:", count),
+            CliLang::De => format!("✔ {} Open Firenet-Dongle(s) gefunden:", count),
         }
     }
 
@@ -196,9 +196,9 @@ impl CliLang {
 
     pub fn flash_usb_title(&self) -> &'static str {
         match self {
-            CliLang::Fr => "⚡ Flashage USB série de la clé Open-Firenet",
-            CliLang::En => "⚡ USB Serial Flashing of Open-Firenet dongle",
-            CliLang::De => "⚡ USB-Serieller Flash des Open-Firenet-Dongles",
+            CliLang::Fr => "⚡ Flashage USB série de la clé Open Firenet",
+            CliLang::En => "⚡ USB Serial Flashing of Open Firenet dongle",
+            CliLang::De => "⚡ USB-Serieller Flash des Open Firenet-Dongles",
         }
     }
 
@@ -252,9 +252,9 @@ impl CliLang {
 
     pub fn enter_ip_prompt(&self) -> &'static str {
         match self {
-            CliLang::Fr => "Entrez l'adresse IP de votre clé Open-Firenet",
-            CliLang::En => "Enter the IP address of your Open-Firenet dongle",
-            CliLang::De => "Geben Sie die IP-Adresse des Open-Firenet-Dongles ein",
+            CliLang::Fr => "Entrez l'adresse IP de votre clé Open Firenet",
+            CliLang::En => "Enter the IP address of your Open Firenet dongle",
+            CliLang::De => "Geben Sie die IP-Adresse des Open Firenet-Dongles ein",
         }
     }
 
@@ -340,17 +340,17 @@ impl CliLang {
 
     pub fn releases_title(&self) -> &'static str {
         match self {
-            CliLang::Fr => "📦 Versions d'Open-Firenet publiées sur GitHub :",
-            CliLang::En => "📦 Open-Firenet releases published on GitHub:",
-            CliLang::De => "📦 Auf GitHub veröffentlichte Open-Firenet-Releases:",
+            CliLang::Fr => "📦 Versions d'Open Firenet publiées sur GitHub :",
+            CliLang::En => "📦 Open Firenet releases published on GitHub:",
+            CliLang::De => "📦 Auf GitHub veröffentlichte Open Firenet-Releases:",
         }
     }
 
     pub fn wifi_setup_title(&self) -> &'static str {
         match self {
-            CliLang::Fr => "📶 Configuration Wi-Fi du dongle Open-Firenet",
-            CliLang::En => "📶 Open-Firenet Dongle Wi-Fi Configuration",
-            CliLang::De => "📶 WLAN-Konfiguration des Open-Firenet-Dongles",
+            CliLang::Fr => "📶 Configuration Wi-Fi du dongle Open Firenet",
+            CliLang::En => "📶 Open Firenet Dongle Wi-Fi Configuration",
+            CliLang::De => "📶 WLAN-Konfiguration des Open Firenet-Dongles",
         }
     }
 
@@ -364,9 +364,9 @@ impl CliLang {
 
     pub fn wifi_native_hint(&self) -> &'static str {
         match self {
-            CliLang::Fr => "💡 Astuce : Sur les cartes sans puce UART dédiée, vous pouvez aussi vous connecter au point d'accès Wi-Fi « Open-Firenet-Setup » (192.168.4.1) pour configurer le réseau.",
-            CliLang::En => "💡 Tip: On boards without a dedicated UART chip, you can also connect to the \"Open-Firenet-Setup\" Wi-Fi access point (192.168.4.1) to configure the network.",
-            CliLang::De => "💡 Tipp: Auf Boards ohne dedizierten UART-Chip können Sie das Netzwerk auch über den WLAN-Access-Point „Open-Firenet-Setup“ (192.168.4.1) einrichten.",
+            CliLang::Fr => "💡 Astuce : Sur les cartes sans puce UART dédiée, vous pouvez aussi vous connecter au point d'accès Wi-Fi « Open Firenet Setup » (192.168.4.1) pour configurer le réseau.",
+            CliLang::En => "💡 Tip: On boards without a dedicated UART chip, you can also connect to the \"Open Firenet Setup\" Wi-Fi access point (192.168.4.1) to configure the network.",
+            CliLang::De => "💡 Tipp: Auf Boards ohne dedizierten UART-Chip können Sie das Netzwerk auch über den WLAN-Access-Point „Open Firenet Setup“ (192.168.4.1) einrichten.",
         }
     }
 

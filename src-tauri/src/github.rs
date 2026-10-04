@@ -225,7 +225,7 @@ mod tests {
     #[test]
     fn test_official_public_key_valid() {
         let pk = minisign_verify::PublicKey::from_base64(OFFICIAL_PUBLIC_KEY);
-        assert!(pk.is_ok(), "The official Open-Firenet public key should parse without error");
+        assert!(pk.is_ok(), "The official Open Firenet public key should parse without error");
     }
 
     #[test]
