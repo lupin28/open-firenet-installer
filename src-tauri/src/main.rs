@@ -118,6 +118,22 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+/// Puts a wireless update failure in the user's language; any other error is kept as it is.
+fn localize_ota_error(error: anyhow::Error, lang: CliLang) -> anyhow::Error {
+    match error.downcast_ref::<flasher_ota::OtaFailure>() {
+        Some(failure) => anyhow::anyhow!(lang.ota_failure(failure)),
+        None => error,
+    }
+}
+
+/// In the menu, a failed action is shown and the menu stays: returning the error would end the program, and on
+/// Windows the window closes before the message can be read.
+fn report_menu_error(result: Result<()>) {
+    if let Err(e) = result {
+        eprintln!("\n{} {:#}", "✖".red().bold(), e);
+    }
+}
+
 fn run_interactive_menu(mut lang: CliLang) -> Result<()> {
     loop {
         print_banner(lang);
@@ -141,12 +157,12 @@ fn run_interactive_menu(mut lang: CliLang) -> Result<()> {
         println!();
 
         match selection {
-            0 => cmd_scan(None, lang)?,
-            1 => cmd_flash(None, None, None, lang)?,
-            2 => interactive_ota(lang)?,
-            3 => cmd_wifi_setup(None, lang)?,
-            4 => cmd_list_releases(lang)?,
-            5 => cmd_monitor(None, 115200, lang)?,
+            0 => report_menu_error(cmd_scan(None, lang)),
+            1 => report_menu_error(cmd_flash(None, None, None, lang)),
+            2 => report_menu_error(interactive_ota(lang)),
+            3 => report_menu_error(cmd_wifi_setup(None, lang)),
+            4 => report_menu_error(cmd_list_releases(lang)),
+            5 => report_menu_error(cmd_monitor(None, 115200, lang)),
             6 => {
                 println!("{}", lang.goodbye());
                 break;
@@ -248,7 +264,7 @@ fn cmd_ota(ip: &str, file: Option<PathBuf>, release: Option<String>, lang: CliLa
         choose_or_download_firmware(false, release, lang)?
     };
 
-    OtaFlasher::flash_arduino_ota(ip, &bin_path, |_pct, _msg| {})?;
+    OtaFlasher::flash_arduino_ota(ip, &bin_path, |_pct, _msg| {}).map_err(|e| localize_ota_error(e, lang))?;
     Ok(())
 }
 

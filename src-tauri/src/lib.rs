@@ -129,12 +129,28 @@ async fn update_ota_device(
                 "percent": pct,
                 "message": msg
             }));
-        }).map_err(|e| e.to_string())?;
+        }).map_err(ota_error_for_window)?;
         let _ = app.emit("ota-status", "✔ La clé a redémarré et est de nouveau en ligne !");
         Ok("Mise à jour réussie ! La clé a redémarré et est de nouveau en ligne.".to_string())
     })
     .await
     .map_err(|e| e.to_string())?
+}
+
+/// A failure the window translates is sent as `i18n:` + JSON (`key`, values); any other error as its text.
+fn ota_error_for_window(error: anyhow::Error) -> String {
+    use flasher_ota::{OtaFailure, OtaFlasher};
+    match error.downcast_ref::<OtaFailure>() {
+        Some(OtaFailure::SlotTooSmall { firmware_bytes, slot_bytes }) => format!("i18n:{}", serde_json::json!({
+            "key": "otaErrSlotTooSmall", "firmware": firmware_bytes, "slot": slot_bytes
+        })),
+        Some(OtaFailure::NoTcpConnection { port, firmware_bytes, slot_may_be_too_small }) => format!("i18n:{}", serde_json::json!({
+            "key": "otaErrNoConnection", "port": port,
+            "also": if *slot_may_be_too_small { Some("otaErrSlotMaybeTooSmall") } else { None },
+            "firmware": firmware_bytes, "slot": OtaFlasher::DEFAULT_SCHEME_SLOT_BYTES
+        })),
+        None => error.to_string(),
+    }
 }
 
 #[tauri::command]

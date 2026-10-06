@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { open as openFileDialog } from "@tauri-apps/plugin-dialog";
-import { t, setLanguage, getLang } from "./i18n.js";
+import { t, setLanguage, getLang, errorText } from "./i18n.js";
 import { renderMarkdown } from "./markdown.js";
 import { icon, hydrateIcons } from "./icons.js";
 
@@ -686,8 +686,8 @@ async function doOtaUpdate() {
     }, 400);
   } catch (err) {
     console.error("Erreur OTA :", err);
-    otaStatusText.textContent = `${t("alertErrorPrefix")} ${err}`;
-    alert(`${t("alertErrorPrefix")} ${err}`);
+    otaStatusText.textContent = `${t("alertErrorPrefix")} ${errorText(err)}`;
+    alert(`${t("alertErrorPrefix")} ${errorText(err)}`);
   } finally {
     // Clear the picked file so a later attempt in "file" mode doesn't
     // silently reuse a stale path.
