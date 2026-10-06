@@ -8,11 +8,34 @@ use std::path::Path;
 use std::thread;
 use std::time::Duration;
 
+/// Failures the caller shows in the user's language (command line: `cli_i18n`, window: `i18n.js`). The `Display`
+/// text is only the English fallback.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OtaFailure {
+    /// The stick reported an update slot smaller than the firmware.
+    SlotTooSmall { firmware_bytes: usize, slot_bytes: usize },
+    /// The stick accepted the invitation but never connected back.
+    NoTcpConnection { port: u16, firmware_bytes: usize, slot_may_be_too_small: bool },
+}
+
+impl std::fmt::Display for OtaFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OtaFailure::SlotTooSmall { firmware_bytes, slot_bytes } => write!(
+                f, "update slot too small: {} bytes for a firmware of {} bytes, flash the stick once over USB", slot_bytes, firmware_bytes
+            ),
+            OtaFailure::NoTcpConnection { port, .. } => write!(f, "the stick did not connect back to TCP port {}", port),
+        }
+    }
+}
+
+impl std::error::Error for OtaFailure {}
+
 pub struct OtaFlasher;
 
 impl OtaFlasher {
     /// Update slot of Arduino's default 4 MB partition scheme (the releases use "Minimal SPIFFS", 1,966,080 bytes).
-    const DEFAULT_SCHEME_SLOT_BYTES: usize = 1_310_720;
+    pub const DEFAULT_SCHEME_SLOT_BYTES: usize = 1_310_720;
 
     /// Size of the stick's update slot, as reported by its firmware (`device.ota_slot_bytes`), when it reports one.
     fn ota_slot_bytes(ip: &str) -> Option<usize> {
@@ -21,20 +44,6 @@ impl OtaFlasher {
         let state: serde_json::Value = resp.into_json().ok()?;
         let slot = state.get("device")?.get("ota_slot_bytes")?.as_u64()?;
         if slot == 0 { None } else { Some(slot as usize) }
-    }
-
-    fn slot_too_small_message(firmware_bytes: usize, slot_bytes: Option<usize>) -> String {
-        let slot = match slot_bytes {
-            Some(s) => format!("l'emplacement de mise à jour de cette clé fait {} octets", s),
-            None => format!(
-                "l'emplacement de mise à jour de cette clé est peut-être trop petit ({} octets si elle a été flashée depuis l'IDE Arduino avec le schéma de partition par défaut)",
-                Self::DEFAULT_SCHEME_SLOT_BYTES
-            ),
-        };
-        format!(
-            "{} et ce firmware en fait {}. Une mise à jour sans fil ne peut pas agrandir cet emplacement : flashez la clé une fois par USB (\"Flash via USB\"), ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.",
-            slot, firmware_bytes
-        )
     }
 
     /// Effectue la mise à jour sans fil via le protocole ArduinoOTA en 100% Rust natif
@@ -64,7 +73,7 @@ impl OtaFlasher {
         // larger firmware is refused by the stick without a word. Newer firmware reports the slot size.
         if let Some(slot) = Self::ota_slot_bytes(ip) {
             if content_size > slot {
-                return Err(anyhow!("{}", Self::slot_too_small_message(content_size, Some(slot))));
+                return Err(OtaFailure::SlotTooSmall { firmware_bytes: content_size, slot_bytes: slot }.into());
             }
         }
 
@@ -142,14 +151,11 @@ impl OtaFlasher {
             }
         }
 
-        let mut stream = client_stream.ok_or_else(|| {
-            // An older firmware does not report its slot size: above Arduino's default slot, name that cause too.
-            let slot_hint = if content_size > Self::DEFAULT_SCHEME_SLOT_BYTES {
-                format!("\n\nAutre cause possible : {}", Self::slot_too_small_message(content_size, None))
-            } else {
-                String::new()
-            };
-            anyhow!("Délai d'attente dépassé : l'ESP32 n'a pas pu se connecter au port TCP {} du PC (vérifiez que votre pare-feu autorise les connexions entrantes sur le réseau local){}", local_port, slot_hint)
+        // An older firmware does not report its slot size: above Arduino's default slot, name that cause too.
+        let mut stream = client_stream.ok_or(OtaFailure::NoTcpConnection {
+            port: local_port,
+            firmware_bytes: content_size,
+            slot_may_be_too_small: content_size > Self::DEFAULT_SCHEME_SLOT_BYTES,
         })?;
 
         stream.set_nonblocking(false)?;

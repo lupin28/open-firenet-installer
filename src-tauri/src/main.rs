@@ -118,6 +118,14 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+/// Puts a wireless update failure in the user's language; any other error is kept as it is.
+fn localize_ota_error(error: anyhow::Error, lang: CliLang) -> anyhow::Error {
+    match error.downcast_ref::<flasher_ota::OtaFailure>() {
+        Some(failure) => anyhow::anyhow!(lang.ota_failure(failure)),
+        None => error,
+    }
+}
+
 /// In the menu, a failed action is shown and the menu stays: returning the error would end the program, and on
 /// Windows the window closes before the message can be read.
 fn report_menu_error(result: Result<()>) {
@@ -256,7 +264,7 @@ fn cmd_ota(ip: &str, file: Option<PathBuf>, release: Option<String>, lang: CliLa
         choose_or_download_firmware(false, release, lang)?
     };
 
-    OtaFlasher::flash_arduino_ota(ip, &bin_path, |_pct, _msg| {})?;
+    OtaFlasher::flash_arduino_ota(ip, &bin_path, |_pct, _msg| {}).map_err(|e| localize_ota_error(e, lang))?;
     Ok(())
 }
 

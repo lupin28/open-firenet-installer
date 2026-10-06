@@ -27,6 +27,35 @@ impl CliLang {
         CliLang::Fr
     }
 
+    /// Text of a wireless update failure the user can act on.
+    pub fn ota_failure(&self, failure: &crate::flasher_ota::OtaFailure) -> String {
+        use crate::flasher_ota::{OtaFailure, OtaFlasher};
+        match *failure {
+            OtaFailure::SlotTooSmall { firmware_bytes, slot_bytes } => match self {
+                CliLang::Fr => format!("L'emplacement de mise à jour de cette clé fait {} octets et ce firmware en fait {}. Une mise à jour sans fil ne peut pas agrandir cet emplacement : flashez la clé une fois par USB, ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.", slot_bytes, firmware_bytes),
+                CliLang::En => format!("This stick's update slot is {} bytes and this firmware is {} bytes. A wireless update cannot enlarge the slot: flash the stick once over USB, which rewrites the partition table. You will have to enter the Wi-Fi again; wireless updates will work afterwards.", slot_bytes, firmware_bytes),
+                CliLang::De => format!("Der Update-Speicherplatz dieses Sticks hat {} Bytes, diese Firmware {} Bytes. Ein drahtloses Update kann den Speicherplatz nicht vergrößern: Flashen Sie den Stick einmal per USB, dabei wird die Partitionstabelle neu geschrieben. Das WLAN muss danach neu eingegeben werden; drahtlose Updates funktionieren dann wieder.", slot_bytes, firmware_bytes),
+            },
+            OtaFailure::NoTcpConnection { port, firmware_bytes, slot_may_be_too_small } => {
+                let mut text = match self {
+                    CliLang::Fr => format!("Délai d'attente dépassé : la clé n'a pas pu se connecter au port TCP {} de cet ordinateur. Vérifiez que votre pare-feu autorise les connexions entrantes sur le réseau local.", port),
+                    CliLang::En => format!("Timed out: the stick could not connect to TCP port {} of this computer. Check that your firewall allows incoming connections on the local network.", port),
+                    CliLang::De => format!("Zeitüberschreitung: Der Stick konnte sich nicht mit TCP-Port {} dieses Computers verbinden. Prüfen Sie, ob Ihre Firewall eingehende Verbindungen im lokalen Netzwerk zulässt.", port),
+                };
+                if slot_may_be_too_small {
+                    let slot = OtaFlasher::DEFAULT_SCHEME_SLOT_BYTES;
+                    text.push_str("\n\n");
+                    text.push_str(&match self {
+                        CliLang::Fr => format!("Autre cause possible : l'emplacement de mise à jour de la clé est trop petit pour ce firmware ({} octets). Il fait {} octets quand la clé a été flashée depuis l'IDE Arduino avec le schéma de partition par défaut. Dans ce cas, flashez la clé une fois par USB, ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.", firmware_bytes, slot),
+                        CliLang::En => format!("Other possible cause: the stick's update slot is too small for this firmware ({} bytes). It is {} bytes when the stick was flashed from the Arduino IDE with the default partition scheme. In that case, flash the stick once over USB, which rewrites the partition table. You will have to enter the Wi-Fi again; wireless updates will work afterwards.", firmware_bytes, slot),
+                        CliLang::De => format!("Andere mögliche Ursache: Der Update-Speicherplatz des Sticks ist für diese Firmware ({} Bytes) zu klein. Er hat {} Bytes, wenn der Stick aus der Arduino IDE mit dem Standard-Partitionsschema geflasht wurde. Flashen Sie den Stick in diesem Fall einmal per USB, dabei wird die Partitionstabelle neu geschrieben. Das WLAN muss danach neu eingegeben werden; drahtlose Updates funktionieren dann wieder.", firmware_bytes, slot),
+                    });
+                }
+                text
+            }
+        }
+    }
+
     pub fn banner_subtitle(&self) -> &'static str {
         match self {
             CliLang::Fr => "Assistant multiplateforme de flash USB et mise à jour",

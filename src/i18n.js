@@ -139,6 +139,9 @@ export const translations = {
     alertSelectWifiPort: "Veuillez sélectionner le port USB de la clé.",
     alertFillSsid: "Veuillez saisir le nom de votre réseau Wi-Fi (SSID).",
     alertNoStoveDetected: "Aucun poêle détecté sur le réseau pour le moment. Lancez une recherche d'abord.",
+    otaErrSlotTooSmall: "L'emplacement de mise à jour de cette clé fait {slot} octets et ce firmware en fait {firmware}. Une mise à jour sans fil ne peut pas agrandir cet emplacement : flashez la clé une fois par USB, ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.",
+    otaErrNoConnection: "Délai d'attente dépassé : la clé n'a pas pu se connecter au port TCP {port} de cet ordinateur. Vérifiez que votre pare-feu autorise les connexions entrantes sur le réseau local.",
+    otaErrSlotMaybeTooSmall: "Autre cause possible : l'emplacement de mise à jour de la clé est trop petit pour ce firmware ({firmware} octets). Il fait {slot} octets quand la clé a été flashée depuis l'IDE Arduino avec le schéma de partition par défaut. Dans ce cas, flashez la clé une fois par USB, ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.",
     alertErrorPrefix: "Erreur :"
   },
 
@@ -282,6 +285,9 @@ export const translations = {
     alertSelectWifiPort: "Please select the dongle USB port.",
     alertFillSsid: "Please enter your Wi-Fi network name (SSID).",
     alertNoStoveDetected: "No stove detected on the network yet. Run a search first.",
+    otaErrSlotTooSmall: "This stick's update slot is {slot} bytes and this firmware is {firmware} bytes. A wireless update cannot enlarge the slot: flash the stick once over USB, which rewrites the partition table. You will have to enter the Wi-Fi again; wireless updates will work afterwards.",
+    otaErrNoConnection: "Timed out: the stick could not connect to TCP port {port} of this computer. Check that your firewall allows incoming connections on the local network.",
+    otaErrSlotMaybeTooSmall: "Other possible cause: the stick's update slot is too small for this firmware ({firmware} bytes). It is {slot} bytes when the stick was flashed from the Arduino IDE with the default partition scheme. In that case, flash the stick once over USB, which rewrites the partition table. You will have to enter the Wi-Fi again; wireless updates will work afterwards.",
     alertErrorPrefix: "Error:"
   },
 
@@ -405,6 +411,9 @@ export const translations = {
     "alertSelectWifiPort": "Seleziona la porta USB del dongle.",
     "alertFillSsid": "Inserisci il nome della rete Wi-Fi (SSID).",
     "alertNoStoveDetected": "Nessuna stufa ancora rilevata nella rete. Avvia prima una ricerca.",
+    "otaErrSlotTooSmall": "Lo spazio di aggiornamento di questo dongle è di {slot} byte e questo firmware ne occupa {firmware}. Un aggiornamento tramite Wi-Fi non può ampliare questo spazio: esegui una volta il flash del dongle tramite USB, che riscrive la tabella delle partizioni. Dovrai reinserire il Wi-Fi; dopo, gli aggiornamenti tramite Wi-Fi funzioneranno di nuovo.",
+    "otaErrNoConnection": "Tempo scaduto: il dongle non è riuscito a connettersi alla porta TCP {port} di questo computer. Verifica che il firewall consenta le connessioni in entrata sulla rete locale.",
+    "otaErrSlotMaybeTooSmall": "Altra causa possibile: lo spazio di aggiornamento del dongle è troppo piccolo per questo firmware ({firmware} byte). È di {slot} byte quando il dongle è stato programmato dall'IDE Arduino con lo schema di partizioni predefinito. In tal caso, esegui una volta il flash del dongle tramite USB, che riscrive la tabella delle partizioni. Dovrai reinserire il Wi-Fi; dopo, gli aggiornamenti tramite Wi-Fi funzioneranno di nuovo.",
     "alertErrorPrefix": "Errore:"
   },
 
@@ -548,6 +557,9 @@ export const translations = {
     alertSelectWifiPort: "Bitte wählen Sie den USB-Port des Dongles aus.",
     alertFillSsid: "Bitte geben Sie den Namen Ihres WLAN-Netzwerks (SSID) ein.",
     alertNoStoveDetected: "Bisher kein Ofen im Netzwerk erkannt. Bitte zuerst einen Scan starten.",
+    otaErrSlotTooSmall: "Der Update-Speicherplatz dieses Sticks hat {slot} Bytes, diese Firmware {firmware} Bytes. Ein drahtloses Update kann den Speicherplatz nicht vergrößern: Flashen Sie den Stick einmal per USB, dabei wird die Partitionstabelle neu geschrieben. Das WLAN muss danach neu eingegeben werden; drahtlose Updates funktionieren dann wieder.",
+    otaErrNoConnection: "Zeitüberschreitung: Der Stick konnte sich nicht mit TCP-Port {port} dieses Computers verbinden. Prüfen Sie, ob Ihre Firewall eingehende Verbindungen im lokalen Netzwerk zulässt.",
+    otaErrSlotMaybeTooSmall: "Andere mögliche Ursache: Der Update-Speicherplatz des Sticks ist für diese Firmware ({firmware} Bytes) zu klein. Er hat {slot} Bytes, wenn der Stick aus der Arduino IDE mit dem Standard-Partitionsschema geflasht wurde. Flashen Sie den Stick in diesem Fall einmal per USB, dabei wird die Partitionstabelle neu geschrieben. Das WLAN muss danach neu eingegeben werden; drahtlose Updates funktionieren dann wieder.",
     alertErrorPrefix: "Fehler:"
   }
 };
@@ -561,6 +573,20 @@ export function getLang() {
 export function t(key) {
   const dict = translations[currentLang] || translations.fr;
   return dict[key] || translations.fr[key] || key;
+}
+
+// Text of an error sent by the backend: either a plain message, or "i18n:" + JSON naming a translated text
+// (`key`, optionally a second one in `also`) and the values that fill its {placeholders}.
+export function errorText(err) {
+  const raw = String(err);
+  if (!raw.startsWith("i18n:")) return raw;
+  try {
+    const data = JSON.parse(raw.slice(5));
+    const fill = (key) => t(key).replace(/\{(\w+)\}/g, (m, name) => (name in data ? data[name] : m));
+    return [data.key, data.also].filter(Boolean).map(fill).join("\n\n");
+  } catch (e) {
+    return raw;
+  }
 }
 
 export function setLanguage(lang, onLangChangeCallback) {
