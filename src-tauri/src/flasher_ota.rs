@@ -11,6 +11,32 @@ use std::time::Duration;
 pub struct OtaFlasher;
 
 impl OtaFlasher {
+    /// Update slot of Arduino's default 4 MB partition scheme (the releases use "Minimal SPIFFS", 1,966,080 bytes).
+    const DEFAULT_SCHEME_SLOT_BYTES: usize = 1_310_720;
+
+    /// Size of the stick's update slot, as reported by its firmware (`device.ota_slot_bytes`), when it reports one.
+    fn ota_slot_bytes(ip: &str) -> Option<usize> {
+        let url = format!("http://{}/api/state", ip);
+        let resp = ureq::get(&url).timeout(Duration::from_millis(1500)).call().ok()?;
+        let state: serde_json::Value = resp.into_json().ok()?;
+        let slot = state.get("device")?.get("ota_slot_bytes")?.as_u64()?;
+        if slot == 0 { None } else { Some(slot as usize) }
+    }
+
+    fn slot_too_small_message(firmware_bytes: usize, slot_bytes: Option<usize>) -> String {
+        let slot = match slot_bytes {
+            Some(s) => format!("l'emplacement de mise à jour de cette clé fait {} octets", s),
+            None => format!(
+                "l'emplacement de mise à jour de cette clé est peut-être trop petit ({} octets si elle a été flashée depuis l'IDE Arduino avec le schéma de partition par défaut)",
+                Self::DEFAULT_SCHEME_SLOT_BYTES
+            ),
+        };
+        format!(
+            "{} et ce firmware en fait {}. Une mise à jour sans fil ne peut pas agrandir cet emplacement : flashez la clé une fois par USB (\"Flash via USB\"), ce qui réécrit la table de partitions. Le Wi-Fi sera à ressaisir, puis les mises à jour sans fil fonctionneront de nouveau.",
+            slot, firmware_bytes
+        )
+    }
+
     /// Effectue la mise à jour sans fil via le protocole ArduinoOTA en 100% Rust natif
     /// (UDP 3232 pour l'invitation + TCP local pour le streaming du firmware)
     pub fn flash_arduino_ota<F>(ip: &str, bin_path: &Path, on_progress: F) -> Result<()>
@@ -33,6 +59,14 @@ impl OtaFlasher {
         let file_md5 = hex::encode(hasher.finalize());
 
         println!("Firmware : {} octets, MD5: {}", content_size, file_md5);
+
+        // A stick first flashed with Arduino's default partition scheme has update slots of 1,310,720 bytes: a
+        // larger firmware is refused by the stick without a word. Newer firmware reports the slot size.
+        if let Some(slot) = Self::ota_slot_bytes(ip) {
+            if content_size > slot {
+                return Err(anyhow!("{}", Self::slot_too_small_message(content_size, Some(slot))));
+            }
+        }
 
         // 1. Ouvrir le serveur TCP local sur un port éphémère libre
         let tcp_listener = TcpListener::bind("0.0.0.0:0")
@@ -109,7 +143,13 @@ impl OtaFlasher {
         }
 
         let mut stream = client_stream.ok_or_else(|| {
-            anyhow!("Délai d'attente dépassé : l'ESP32 n'a pas pu se connecter au port TCP {} du PC (vérifiez que votre pare-feu autorise les connexions entrantes sur le réseau local)", local_port)
+            // An older firmware does not report its slot size: above Arduino's default slot, name that cause too.
+            let slot_hint = if content_size > Self::DEFAULT_SCHEME_SLOT_BYTES {
+                format!("\n\nAutre cause possible : {}", Self::slot_too_small_message(content_size, None))
+            } else {
+                String::new()
+            };
+            anyhow!("Délai d'attente dépassé : l'ESP32 n'a pas pu se connecter au port TCP {} du PC (vérifiez que votre pare-feu autorise les connexions entrantes sur le réseau local){}", local_port, slot_hint)
         })?;
 
         stream.set_nonblocking(false)?;

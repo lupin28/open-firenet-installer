@@ -118,6 +118,14 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+/// In the menu, a failed action is shown and the menu stays: returning the error would end the program, and on
+/// Windows the window closes before the message can be read.
+fn report_menu_error(result: Result<()>) {
+    if let Err(e) = result {
+        eprintln!("\n{} {:#}", "✖".red().bold(), e);
+    }
+}
+
 fn run_interactive_menu(mut lang: CliLang) -> Result<()> {
     loop {
         print_banner(lang);
@@ -141,12 +149,12 @@ fn run_interactive_menu(mut lang: CliLang) -> Result<()> {
         println!();
 
         match selection {
-            0 => cmd_scan(None, lang)?,
-            1 => cmd_flash(None, None, None, lang)?,
-            2 => interactive_ota(lang)?,
-            3 => cmd_wifi_setup(None, lang)?,
-            4 => cmd_list_releases(lang)?,
-            5 => cmd_monitor(None, 115200, lang)?,
+            0 => report_menu_error(cmd_scan(None, lang)),
+            1 => report_menu_error(cmd_flash(None, None, None, lang)),
+            2 => report_menu_error(interactive_ota(lang)),
+            3 => report_menu_error(cmd_wifi_setup(None, lang)),
+            4 => report_menu_error(cmd_list_releases(lang)),
+            5 => report_menu_error(cmd_monitor(None, 115200, lang)),
             6 => {
                 println!("{}", lang.goodbye());
                 break;
