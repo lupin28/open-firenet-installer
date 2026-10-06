@@ -1,6 +1,6 @@
 [package]
 name = "open-firenet-installer"
-version = "1.5.1"
+version = "1.6.0"
 edition = "2021"
 authors = ["Open Firenet Community"]
 description = "Cross-platform GUI & CLI installer, flasher, and OTA updater for Open Firenet"
